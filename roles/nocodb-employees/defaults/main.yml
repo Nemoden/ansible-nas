@@ -1,0 +1,10 @@
+---
+nocodb_employees_enabled: true
+nocodb_employees_available_externally: true
+nocodb_employees_hostname: nocodb-employees
+
+nocodb_employees_docker_container_name: nocodb-employees
+nocodb_employees_docker_container_image: nocodb/nocodb
+nocodb_employees_docker_container_tag: latest
+nocodb_employees_port: 18080
+nocodb_employees_memory: 1g

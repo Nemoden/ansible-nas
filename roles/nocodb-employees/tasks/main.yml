@@ -1,0 +1,35 @@
+---
+- name: Start NocoDB
+  block:
+    - name: Check MySQL running
+      ansible.builtin.fail:
+        msg: "NocoDB requires MySQL"
+      when: mysql_enabled is false
+
+    - name: Start NocoDB container
+      community.docker.docker_container:
+        name: "{{ nocodb_employees_docker_container_name }}"
+        image: "{{ nocodb_employees_docker_container_image }}:{{ nocodb_employees_docker_container_tag }}"
+        pull: true
+        networks:
+          - name: "mysql"
+        volumes:
+          - "/rust/docker/nocodb_employees:/usr/app/data:rw"
+        ports:
+          - "{{ nocodb_employees_port }}:8080"
+        env:
+          NC_DB: "mysql2://mysql-shared:3306?u=root&d=employees"
+          NC_DISBALE_CACHE: "true"
+          NC_ADMIN_EMAIL: "the.nemoden@gmail.com"
+          NC_ADMIN_PASSWORD: "secret123"
+
+        restart_policy: unless-stopped
+        memory: "{{ nocodb_employees_memory }}"
+        labels:
+          traefik.enable: "{{ nocodb_employees_available_externally | string }}"
+          traefik.http.routers.nocodb_employees.rule: "Host(`{{ nocodb_employees_hostname }}.{{ ansible_nas_domain }}`)"
+          traefik.http.routers.nocodb_employees.tls.certresolver: "letsencrypt"
+          traefik.http.routers.nocodb_employees.tls.domains[0].main: "{{ ansible_nas_domain }}"
+          traefik.http.routers.nocodb_employees.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
+          traefik.http.services.nocodb_employees.loadbalancer.server.port: "8080"
+

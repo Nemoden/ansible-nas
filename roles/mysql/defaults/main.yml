@@ -1,0 +1,15 @@
+---
+mysql_enabled: false
+
+# directories
+mysql_data_directory: "{{ db_root }}/data/mysql-shared/"
+
+mysql_port: "3306"
+
+# specs
+mysql_memory: 1g
+
+# docker
+mysql_container_name: mysql-shared
+mysql_container_image_name: mysql
+mysql_container_image_version: 8

@@ -1,0 +1,29 @@
+---
+- name: Start MySQL
+  block:
+    - name: Create mysql network
+      community.docker.docker_network:
+        name: mysql
+
+    - name: Start MySQL container
+      community.docker.docker_container:
+        name: "{{ mysql_container_name }}"
+        image: "{{ mysql_container_image_name }}:{{ mysql_container_image_version }}"
+        pull: true
+        volumes:
+          - "{{ mysql_data_directory }}:/var/lib/mysql"
+        ports:
+          - "{{ mysql_port }}:{{ mysql_port }}"
+        networks:
+          - name: "mysql"
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+        restart_policy: unless-stopped
+        memory: "{{ mysql_memory }}"
+      when: mysql_enabled is true
+
+- name: Stop MySQL
+  community.docker.docker_container:
+    name: "{{ mysql_container_name }}"
+    state: absent
+  when: mysql_enabled is false

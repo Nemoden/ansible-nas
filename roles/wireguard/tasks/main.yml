@@ -1,0 +1,58 @@
+---
+- name: Create WireGuard Directory
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ wireguard_data_directory }}"
+
+- name: Create WireGuard Conf Directory
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ wireguard_config_directory }}"
+
+- name: Copy client conf
+  ansible.builtin.template:
+    src: syd-hop.conf
+    dest: "{{ wireguard_config_directory }}/syd.conf"
+  register: template_files_result
+
+- name: Copy resolv.conf
+  ansible.builtin.template:
+    src: resolv.conf
+    dest: "{{ wireguard_data_directory }}/resolv.conf"
+  register: template_files_result
+
+- name: Create WireGuard Docker Container
+  docker_container:
+    name: wireguard
+    image: lscr.io/linuxserver/wireguard:latest
+    pull: true
+    networks:
+      - name: "mysql"
+    env:
+      PUID: "1000"
+      PGID: "1000"
+      TZ: "{{ ansible_nas_timezone }}"
+      SERVERPORT: "51820"
+      ALLOWEDIPS: "0.0.0.0/1, 128.0.0.0/1"
+    volumes:
+      - "{{ wireguard_config_directory }}:/config/wg_confs:ro"
+      - "{{ wireguard_data_directory }}/resolv.conf:/etc/resolv.conf"
+      - "/lib/modules:/lib/modules:ro"
+    ports:
+      - "{{ wireguard_port }}:51820/udp"
+    capabilities:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      net.ipv4.conf.all.src_valid_mark=1
+      net.ipv4.ip_forward=1
+      net.ipv6.conf.all.disable_ipv6=0
+      net.ipv6.conf.default.disable_ipv6=0
+      net.ipv6.conf.lo.disable_ipv6=0
+    restart_policy: unless-stopped
+    memory: "{{ wireguard_memory }}"
+    labels: "{{ labels }}"

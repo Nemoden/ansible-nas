@@ -8,7 +8,7 @@
         recurse: yes
       with_items:
         - "{{ gitea_data_directory }}/gitea"
-        - "{{ gitea_data_directory }}/mysql"
+        - "{{ db_root }}/gitea-mysql"
 
     - name: Create MySQL container for Gitea
       community.docker.docker_container:
@@ -16,7 +16,7 @@
         image: "{{ gitea_mysql_image_name }}:{{ gitea_mysql_image_version }}"
         pull: true
         volumes:
-          - "{{ gitea_data_directory }}/mysql:/var/lib/mysql:rw"
+          - "{{ db_root }}/gitea-mysql:/var/lib/mysql:rw"
         env:
           MYSQL_DATABASE: "gitea"
           MYSQL_USER: "gitea"

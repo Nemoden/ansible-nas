@@ -2,7 +2,6 @@
 # Page meta info, like heading, footer text and nav links
 pageInfo:
   title: Dashy
-  description: Welcome to your new Ansible-NAS dashboard!
   navLinks:
     - title: Ansible-NAS
       path: https://ansible-nas.io

@@ -46,14 +46,17 @@
         - ansible-nas-docker
         - ansible-nas
 
+    - role: wireguard
+      tags:
+        - wireguard
+      when: (wireguard_enabled | default(False))
+
     ###
     ### Stacks
     ###
-
     - role: logging
       tags:
         - logging
-
 
     ###
     ### Applications
@@ -181,6 +184,10 @@
     - role: homebridge
       tags:
         - homebridge
+
+    - role: homepage
+      tags:
+        - homepage
 
     - role: jackett
       tags:
@@ -429,3 +436,11 @@
     - role: znc
       tags:
         - znc
+
+    - role: mysql
+      tags:
+        - mysql
+
+    - role: nocodb-employees
+      tags:
+        - nocodb

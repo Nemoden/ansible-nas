@@ -1,0 +1,30 @@
+---
+# enable or disable the application
+wireguard_enabled: false
+wireguard_available_externally: false
+
+# directories
+wireguard_data_directory: "{{ docker_root }}/wireguard/data"
+wireguard_config_directory: "{{ docker_root }}/wireguard/conf"
+
+# network
+wireguard_port: "51820"
+wireguard_hostname: "wireguard"
+
+# specs
+wireguard_memory: "512m"
+
+ports:
+  block:
+    - "{{ transmission_webui_port }}:9091"
+    - "{{ transmission_external_port }}:51413"
+    - "{{ transmission_external_port }}:51413/udp"
+  when: transmission_vpn is True
+
+labels:
+  traefik.enable: "True"
+  traefik.http.routers.transmission.rule: "Host(`{{ transmission_hostname }}.{{ ansible_nas_domain }}`)"
+  traefik.http.routers.transmission.tls.certresolver: "letsencrypt"
+  traefik.http.routers.transmission.tls.domains[0].main: "{{ ansible_nas_domain }}"
+  traefik.http.routers.transmission.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
+  traefik.http.services.transmission.loadbalancer.server.port: "9091"
