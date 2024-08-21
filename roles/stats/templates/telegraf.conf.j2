@@ -209,6 +209,7 @@
   ## Use SSL but skip chain & host verification
   # insecure_skip_verify = false
 
+
 # Monitor disks' temperatures using hddtemp
 [[inputs.hddtemp]]
   ## By default, telegraf gathers temps data from all disks detected by the
@@ -254,7 +255,7 @@
 #   #
 #   ## On most platforms smartctl requires root access.
 #   ## Setting 'use_sudo' to true will make use of sudo to run smartctl.
-#   ## Sudo must be configured to to allow the telegraf user to run smartctl
+#   ## Sudo must be configured to allow the telegraf user to run smartctl
 #   ## with out password.
 #   # use_sudo = false
 #   #
