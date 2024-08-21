@@ -1,0 +1,41 @@
+---
+- name: Checko
+  debug:
+    msg: '{{ lookup("ansible.builtin.env", "HOME") }}'
+  when: ansible_check_mode | default(false) | bool
+
+- name: Install necessary packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - vim
+    - git
+    - curl
+    - nodejs
+    - fish
+  when: false
+
+- name: Add fish to /etc/shells
+  ansible.builtin.lineinfile:
+    path: /etc/shells
+    line: /usr/bin/fish
+  when: false
+
+- name: Make sure nemoden user exists
+  ansible.builtin.user:
+    name: nemoden
+    state: present
+    shell: /bin/fish
+    groups: sudo
+    append: yes
+    createhome: yes
+    home: /home/nemoden
+  when: false
+
+- name: Authroize SSH key for nemoden user
+  ansible.posix.authorized_key:
+    user: nemoden
+    state: present
+    key: "{{ lookup('ansible.builtin.file', lookup('ansible.builtin.env','HOME') + '/.ssh/id_rsa.pub') }}"
+  when: false

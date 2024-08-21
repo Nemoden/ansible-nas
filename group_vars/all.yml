@@ -35,7 +35,8 @@ rust_root: "/rust"
 docker_root: "{{ rust_root }}/docker"
 
 # db files (mysql, postgres, etc)
-db_root: "{{ rust_root }}/db"
+db_root: "{{ rust_root }}/db/data"
+db_logs: "{{ rust_root }}/db/logs"
 
 ###
 ### Samba

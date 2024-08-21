@@ -21,7 +21,7 @@
           - name: "{{ miniflux_network_name }}"
         network_mode: "{{ miniflux_network_name }}"
         volumes:
-          - "{{ miniflux_data_directory }}/postgres:/var/lib/postgresql/data:rw"
+          - "{{ miniflux_postgres_directory }}/postgres:/var/lib/postgresql/data:rw"
         env:
           POSTGRES_USER: "miniflux"
           POSTGRES_PASSWORD: "supersecure"

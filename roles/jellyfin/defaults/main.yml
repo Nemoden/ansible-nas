@@ -11,6 +11,8 @@ jellyfin_photos_directory: "{{ photos_root }}"
 jellyfin_tv_directory: "{{ tv_root }}"
 jellyfin_books_directory: "{{ books_root }}"
 jellyfin_audiobooks_directory: "{{ audiobooks_root }}"
+jellyfin_kids_movies_directory: "{{ kids_movies_root }}"
+jellyfin_kids_tv_directory: "{{ kids_tv_root }}"
 
 # permissions
 jellyfin_movies_permissions: "rw"

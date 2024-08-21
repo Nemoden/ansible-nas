@@ -1,4 +1,9 @@
 ---
+- name: Example task to print values during dry run
+  debug:
+    msg: '{{ "HOST: " ~ "http://" ~ gitea_hostname ~ ":" ~ gitea_port_http if gitea_available_externally == false else "http://" ~ ansible_nas_hostname ~ "." ~ ansible_nas_domain ~ "/" }}'
+  when: ansible_check_mode | default(false) | bool
+
 - name: Start Gitea
   block:
     - name: Create Gitea Directories
@@ -46,7 +51,7 @@
           RUN_MODE: "prod"
           SSH_DOMAIN: "{{ ansible_nas_hostname }}"
           SSH_PORT: "22"
-          ROOT_URL: "http://{{ gitea_hostname }}:{{ gitea_port_http }}/"
+          ROOT_URL: '{{ "http://" ~ gitea_hostname ~ ":" ~ gitea_port_http if gitea_available_externally == false else "https://" ~ ansible_nas_hostname ~ "." ~ ansible_nas_domain ~ "/" }}'
           USER_UID: "1000"
           USER_GID: "1000"
         restart_policy: unless-stopped

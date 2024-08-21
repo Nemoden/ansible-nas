@@ -2,7 +2,7 @@
 mysql_enabled: false
 
 # directories
-mysql_data_directory: "{{ db_root }}/data/mysql-shared/"
+mysql_data_directory: "{{ db_root }}/mysql-shared/"
 
 mysql_port: "3306"
 

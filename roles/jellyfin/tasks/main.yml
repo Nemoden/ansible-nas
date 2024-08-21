@@ -21,6 +21,8 @@
           - "{{ jellyfin_tv_directory }}:/tv:{{ jellyfin_tv_permissions }}"
           - "{{ jellyfin_books_directory }}:/books:{{ jellyfin_books_permissions }}"
           - "{{ jellyfin_audiobooks_directory }}:/audiobooks:{{ jellyfin_audiobooks_permissions }}"
+          - "{{ jellyfin_kids_movies_directory }}:/kids/movies:{{ jellyfin_movies_permissions }}"
+          - "{{ jellyfin_kids_tv_directory }}:/kids/tv:{{ jellyfin_tv_permissions }}"
         ports:
           - "{{ jellyfin_port_http }}:8096"
         env:

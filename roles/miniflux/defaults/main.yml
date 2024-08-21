@@ -4,7 +4,8 @@ miniflux_enabled: false
 miniflux_available_externally: false
 
 # directories
-miniflux_data_directory: "{{ docker_home }}/miniflux"
+miniflux_data_directory: "{{ docker_root }}/miniflux"
+miniflux_postgres_directory: "{{ db_root }}/miniflux-postgres"
 
 # env
 miniflux_admin_username: admin

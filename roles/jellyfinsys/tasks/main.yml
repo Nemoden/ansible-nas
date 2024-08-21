@@ -1,0 +1,42 @@
+---
+- name: Start jellyfin SYS
+  block:
+    - name: Create Jellyfin SYS Directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - "{{ jellyfin_sys_config_directory }}"
+
+    - name: Jellyfin SYS Docker Container
+      community.docker.docker_container:
+        name: "{{ jellyfin_sys_container_name }}"
+        image: "{{ jellyfin_sys_image_name }}:{{ jellyfin_sys_image_version }}"
+        pull: true
+        volumes:
+          - "{{ jellyfin_sys_config_directory }}:/config:rw"
+          - "{{ jellyfin_sys_movies_directory }}:/movies:{{ jellyfin_movies_permissions }}"
+        ports:
+          - "{{ jellyfin_sys_port_http }}:8096"
+        env:
+          TZ: "{{ ansible_nas_timezone }}"
+          PUID: "{{ jellyfin_sys_user_id }}"
+          PGID: "{{ jellyfin_sys_group_id }}"
+        restart_policy: unless-stopped
+        memory: "{{ jellyfin_sys_memory }}"
+        labels:
+          traefik.enable: "{{ jellyfin_sys_available_externally | string }}"
+          traefik.http.routers.jellyfinsys.rule: "Host(`{{ jellyfin_sys_hostname }}.{{ ansible_nas_domain }}`)"
+          traefik.http.routers.jellyfinsys.tls.certresolver: "letsencrypt"
+          traefik.http.routers.jellyfinsys.tls.domains[0].main: "{{ ansible_nas_domain }}"
+          traefik.http.routers.jellyfinsys.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
+          traefik.http.services.jellyfinsys.loadbalancer.server.port: "8096"
+  when: jellyfin_sys_enabled is true
+
+- name: Stop jellyfin SYS
+  block:
+    - name: Stop jellyfin SYS
+      community.docker.docker_container:
+        name: "{{ jellyfin_sys_container_name }}"
+        state: absent
+  when: jellyfin_sys_enabled is false

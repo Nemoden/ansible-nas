@@ -197,6 +197,10 @@
       tags:
         - jellyfin
 
+    - role: jellyfinsys
+      tags:
+        - jellyfinsys
+
     - role: joomla
       tags:
         - joomla

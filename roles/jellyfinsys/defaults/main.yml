@@ -1,0 +1,27 @@
+---
+# enable or disable the application
+jellyfin_sys_enabled: false
+jellyfin_sys_available_externally: false
+
+# directories
+jellyfin_sys_config_directory: "/rust/docker/jsys/config"
+jellyfin_sys_movies_directory: "/rust/sys"
+
+# permissions
+jellyfin_sys_movies_permissions: "rw"
+
+# uid / gid
+jellyfin_sys_user_id: "0"
+jellyfin_sys_group_id: "0"
+
+# network
+jellyfin_sys_hostname: "x"
+jellyfin_sys_port_http: "8097"
+
+# docker
+jellyfin_sys_container_name: "jsys"
+jellyfin_sys_image_name: "linuxserver/jellyfin"
+jellyfin_sys_image_version: "latest"
+
+# specs
+jellyfin_sys_memory: "1g"
