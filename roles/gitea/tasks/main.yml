@@ -1,8 +1,8 @@
 ---
-- name: Example task to print values during dry run
-  debug:
-    msg: '{{ "HOST: " ~ "http://" ~ gitea_hostname ~ ":" ~ gitea_port_http if gitea_available_externally == false else "http://" ~ ansible_nas_hostname ~ "." ~ ansible_nas_domain ~ "/" }}'
-  when: ansible_check_mode | default(false) | bool
+#- name: Example task to print values during dry run
+  #debug:
+    #msg: '{{ "HOST: " ~ "http://" ~ gitea_hostname ~ ":" ~ gitea_port_http if gitea_available_externally == false else "http://" ~ ansible_nas_hostname ~ "." ~ ansible_nas_domain ~ "/" }}'
+  #when: ansible_check_mode | default(false) | bool
 
 - name: Start Gitea
   block:

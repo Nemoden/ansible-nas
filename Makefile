@@ -5,6 +5,21 @@ default: all
 all:
 	ansible-playbook -i inventories/workhorse/inventory -b -u root nas.yml
 
+deps:
+	ansible-galaxy install -r requirements.yml
+
+check:
+	ansible-playbook --check --diff -i inventories/workhorse/inventory -b -u root nas.yml
+
+workhorse.check:
+	ansible-playbook --check --diff -i inventories/workhorse/inventory --tags "mysql,gitea,calibre,calibreweb,wireguard,jellyfin,jellyfinsys,samba,traefik,youtubedlmaterial,transmission,stats,portainer,miniflux,glances,dashy,homepage,paperless_ng" -b -u root nas.yml
+
+calibre.check:
+	ansible-playbook --check --diff -i inventories/workhorse/inventory --tags "calibre,calibreweb" -b -u root nas.yml
+
+calibre:
+	ansible-playbook -i inventories/workhorse/inventory --tags "calibre,calibreweb" -b -u root nas.yml
+
 dashy:
 	ansible-playbook -i inventories/workhorse/inventory --tags "dashy" -b -u root nas.yml
 	ansible all -a "docker restart dashy" -i inventories/workhorse/inventory -b -u root
@@ -20,10 +35,13 @@ gitea:
 
 gitea.check:
 	ansible-playbook -i inventories/workhorse/inventory --syntax-check --tags "gitea" -b -u root nas.yml
-	ansible-playbook -i inventories/workhorse/inventory --check --tags "gitea" -b -u root nas.yml
+	ansible-playbook -i inventories/workhorse/inventory --check --diff --tags "gitea" -b -u root nas.yml
 
 wg:
 	ansible-playbook -i inventories/workhorse/inventory --tags "wireguard" -b -u root nas.yml
+
+wg.check:
+	ansible-playbook --check --diff -i inventories/workhorse/inventory --tags "wireguard" -b -u root nas.yml
 
 rss:
 	ansible-playbook -i inventories/workhorse/inventory --tags "miniflux" -b -u root nas.yml
