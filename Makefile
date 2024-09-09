@@ -12,13 +12,19 @@ check:
 	ansible-playbook --check --diff -i inventories/workhorse/inventory -b -u root nas.yml
 
 workhorse.check:
-	ansible-playbook --check --diff -i inventories/workhorse/inventory --tags "mysql,gitea,calibre,calibreweb,wireguard,jellyfin,jellyfinsys,samba,traefik,youtubedlmaterial,transmission,stats,portainer,miniflux,glances,dashy,homepage,paperless_ng" -b -u root nas.yml
+	ansible-playbook --check --diff -i inventories/workhorse/inventory --tags "mysql,gitea,calibre,calibreweb,wireguard,jellyfin,jellyfinsys,samba,traefik,youtubedlmaterial,transmission,stats,portainer,miniflux,glances,dashy,homepage,paperless_ng,mealie" -b -u root nas.yml
 
 calibre.check:
 	ansible-playbook --check --diff -i inventories/workhorse/inventory --tags "calibre,calibreweb" -b -u root nas.yml
 
 calibre:
 	ansible-playbook -i inventories/workhorse/inventory --tags "calibre,calibreweb" -b -u root nas.yml
+
+mealie.check:
+	ansible-playbook --check --diff -i inventories/workhorse/inventory --tags "mealie" -b -u root nas.yml
+
+mealie:
+	ansible-playbook -i inventories/workhorse/inventory --tags "mealie" -b -u root nas.yml
 
 dashy:
 	ansible-playbook -i inventories/workhorse/inventory --tags "dashy" -b -u root nas.yml
