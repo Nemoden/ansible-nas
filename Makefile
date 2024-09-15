@@ -14,6 +14,12 @@ check:
 workhorse.check:
 	ansible-playbook --check --diff -i inventories/workhorse/inventory --tags "mysql,gitea,calibre,calibreweb,wireguard,jellyfin,jellyfinsys,samba,traefik,youtubedlmaterial,transmission,stats,portainer,miniflux,glances,dashy,homepage,paperless_ng,mealie,wallabag" -b -u root nas.yml
 
+homepage.check:
+	ansible-playbook --check --diff --tags "homepage" nas.yml
+
+homepage:
+	ansible-playbook --tags "homepage" nas.yml
+
 calibre.check:
 	ansible-playbook --check --diff -i inventories/workhorse/inventory --tags "calibre,calibreweb" -b -u root nas.yml
 
