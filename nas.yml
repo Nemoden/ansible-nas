@@ -192,9 +192,9 @@
       tags:
         - homepage
 
-    - role: immich
+    - role: immich-kirill
       tags:
-        - immich
+        - immich-kirill
 
     - role: jackett
       tags:

@@ -1,0 +1,57 @@
+---
+immich_kirill_enabled: false
+immich_kirill_available_externally: false
+
+# directories
+immich_kirill_data_directory: "{{ docker_home }}/immich-kirill"
+immich_kirill_upload_directory: "{{ docker_home }}/immich-kirill/upload"
+
+# network
+immich_kirill_port: "2283"
+immich_kirill_hostname: "immich-kirill"
+immich_kirill_network_name: "immich-kirill"
+
+# specs
+immich_kirill_postgres_memory: 1g
+immich_kirill_redis_memory: 1g
+immich_kirill_typesense_memory: 1g
+immich_kirill_server_memory: 1g
+immich_kirill_microservices_memory: 1g
+immich_kirill_machinelearning_memory: 1g
+immich_kirill_web_memory: 1g
+immich_kirill_proxy_memory: 1g
+
+# docker
+immich_kirill_postgres_container_name: "immich_kirill_postgres"
+immich_kirill_postgres_data_directory: "{{ docker_home }}/immich-kirill/postgres"
+immich_kirill_redis_container_name: "immich_kirill_redis"
+immich_kirill_server_container_name: "immich_kirill_server"
+immich_kirill_microservices_container_name: "immich_kirill_microservices"
+immich_kirill_machinelearning_container_name: "immich_kirill_machine_learning"
+
+immich_kirill_postgres_image: "tensorchord/pgvecto-rs"
+immich_kirill_postgres_tag: "pg14-v0.2.0"
+immich_kirill_redis_image: "redis"
+immich_kirill_redis_tag: "6.2-alpine"
+immich_kirill_server_image: "ghcr.io/immich-app/immich-server"
+immich_kirill_server_tag: "{{ immich_kirill_version }}"
+immich_kirill_microservices_image: "ghcr.io/immich-app/immich-server"
+immich_kirill_microservices_tag: "{{ immich_kirill_version }}"
+immich_kirill_machinelearning_image: "ghcr.io/immich-app/immich-machine-learning"
+immich_kirill_machinelearning_tag: "{{ immich_kirill_version}}"
+immich_kirill_user_id: "1000"
+immich_kirill_group_id: "1000"
+
+# database
+immich_kirill_db_password: "postgres" # $(pwgen -s 40 1)
+immich_kirill_db_username: "postgres"
+immich_kirill_db_name: "immich_kirill"
+immich_kirill_db_port: "5432"
+
+# immich
+immich_kirill_version: "release"
+immich_kirill_jwt_secret: "verylongandsecrettext"
+immich_kirill_enable_mapbox: "false"
+immich_kirill_mapbox_key: ""
+immich_kirill_upload_location: "./library"
+immich_kirill_public_login_page_message: "Welcome to Immich, Kirill!"

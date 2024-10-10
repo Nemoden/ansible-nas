@@ -20,6 +20,18 @@ homepage.check:
 homepage:
 	ansible-playbook --tags "homepage" nas.yml
 
+samba.check:
+	ansible-playbook --check --diff --tags "samba" nas.yml
+
+samba:
+	ansible-playbook --tags "samba" nas.yml
+
+immich-kirill.check:
+	ansible-playbook --check --diff --tags "immich-kirill" nas.yml
+
+immich-kirill:
+	ansible-playbook --tags "immich-kirill" nas.yml
+
 calibre.check:
 	ansible-playbook --check --diff -i inventories/workhorse/inventory --tags "calibre,calibreweb" -b -u root nas.yml
 
