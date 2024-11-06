@@ -82,5 +82,11 @@ workspace:
 workspace.check:
 	ansible-playbook -i inventories/workhorse/inventory --check --tags "workspace" -b -u root nas.yml
 
+valkey:
+	ansible-playbook --tags "valkey" nas.yml
+
+valkey.check:
+	ansible-playbook --check --tags "valkey" nas.yml
+
 jellyfin:
 	ansible-playbook -i inventories/workhorse/inventory --tags "jellyfin" -b -u root nas.yml

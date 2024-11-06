@@ -1,0 +1,16 @@
+---
+valkey_enabled: false
+valkey_data_directory: "{{ docker_home }}/valkey/data"
+valkey_config_directory: "{{ docker_home }}/valkey/config"
+
+valkey_port: "8085"
+
+valkey_memory: 1g
+
+valkey_container_name: "valkey"
+valkey_container_image_name: "valkey/valkey"
+valkey_container_image_version: "latest"
+
+valkey_persistent_data: false
+
+valkey_hostname: "valkey"

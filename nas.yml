@@ -432,6 +432,10 @@
       tags:
         - valheim
 
+    - role: valkey
+      tags:
+        - valkey
+
     - role: virtual_desktop
       tags:
         - virtual_desktop

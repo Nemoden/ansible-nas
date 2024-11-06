@@ -1,0 +1,45 @@
+---
+- name: Start Valkey
+  block:
+    - name: Create valkey network
+      community.docker.docker_network:
+        name: valkey
+
+    - name: Valkey directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+      with_items:
+        - "{{ valkey_data_directory }}"
+        - "{{ valkey_config_directory }}"
+
+    - name: Add Config
+      ansible.builtin.copy:
+        src: files/valkey.conf
+        dest: "{{ valkey_config_directory }}/valkey.conf"
+
+    - name: Start Valkey container
+      community.docker.docker_container:
+        name: "{{ valkey_container_name }}"
+        image: "{{ valkey_container_image_name }}:{{ valkey_container_image_version }}"
+        pull: true
+        command: "valkey-server /etc/valkey/valkey.conf"
+        volumes:
+          - "{{ valkey_data_directory }}:/data"
+          - "{{ valkey_config_directory }}:/etc/valkey"
+        ports:
+          - "{{ valkey_port }}:6379"
+        networks:
+          - name: "valkey"
+        restart_policy: unless-stopped
+        memory: "{{ valkey_memory }}"
+        env:
+          VALKEY_EXTRA_FLAGS: "{% if valkey_persistent_data %}--save 60 1 {% endif %}--loglevel warning"
+      when: valkey_enabled is true
+
+- name: Stop Valkey
+  community.docker.docker_container:
+    name: "{{ valkey_container_name }}"
+    state: absent
+  when: valkey_enabled is false
