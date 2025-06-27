@@ -5,6 +5,18 @@
       community.docker.docker_network:
         name: mysql
 
+    - name: Create Mysql Config Directory
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - "{{ mysql_config_directory }}"
+
+    - name: Add conf.d
+      ansible.builtin.copy:
+        src: files/conf.d
+        dest: "{{ mysql_config_directory }}/"
+
     - name: Start MySQL container
       community.docker.docker_container:
         name: "{{ mysql_container_name }}"
@@ -12,6 +24,7 @@
         pull: true
         volumes:
           - "{{ mysql_data_directory }}:/var/lib/mysql"
+          - "{{ mysql_config_directory }}/conf.d:/etc/mysql/conf.d"
         ports:
           - "{{ mysql_port }}:{{ mysql_port }}"
         networks:

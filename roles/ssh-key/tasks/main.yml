@@ -1,0 +1,35 @@
+---
+- name: Make sure .ssh directory exists
+  file:
+    path: "{{ ssh_key_path | dirname }}"
+    state: directory
+    mode: 0700
+    owner: "root"
+    group: "root"
+
+- name: Check if SSH key exists
+  stat:
+    path: "{{ ssh_key_path }}"
+  register: ssh_key_stat
+
+- name: Generate SSH key
+  command: "ssh-keygen -t {{ ssh_key_type }} -b {{ ssh_key_bits }} -C '{{ ssh_key_comment }}' -f {{ ssh_key_path }} -N ''"
+  args:
+    creates: "{{ ssh_key_path }}"
+  when: ssh_key_stat.stat.exists == false
+
+- name: Set permissions on the private SSH key
+  file:
+    path: "{{ ssh_key_path }}"
+    state: file
+    mode: 0600
+    owner: "root"
+    group: "root"
+
+- name: Set permissions on the public SSH key
+  file:
+    path: "{{ ssh_key_path }}.pub"
+    state: file
+    mode: 0644
+    owner: "root"
+    group: "root"

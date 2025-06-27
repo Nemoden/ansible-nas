@@ -1,0 +1,6 @@
+---
+# defaults file for ssh-key
+ssh_key_path: ~/.ssh/id_rsa
+ssh_key_type: rsa
+ssh_key_bits: 4096
+ssh_key_comment: "root@{{ ansible_nas_hostname }}"

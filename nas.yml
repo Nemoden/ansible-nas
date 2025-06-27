@@ -41,6 +41,10 @@
         - ansible-nas-docker
         - ansible-nas
 
+    - role: ssh-key
+      tags:
+        - ssh-key
+
     - role: wireguard
       tags:
         - wireguard

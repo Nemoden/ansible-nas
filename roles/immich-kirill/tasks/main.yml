@@ -75,7 +75,7 @@
         networks:
           - name: "{{ immich_kirill_network_name }}"
         ports:
-          - "{{ immich_kirill_port }}:3001"
+          - "{{ immich_kirill_port }}:3003"
         env:
           TZ: "{{ ansible_nas_timezone }}"
           PUID: "{{ immich_kirill_user_id | quote }}"
@@ -99,7 +99,7 @@
           traefik.http.routers.immich.tls.certresolver: "letsencrypt"
           traefik.http.routers.immich.tls.domains[0].main: "{{ ansible_nas_domain }}"
           traefik.http.routers.immich.tls.domains[0].sans: "*.{{ ansible_nas_domain }}"
-          traefik.http.services.immich.loadbalancer.server.port: "3001"
+          traefik.http.services.immich.loadbalancer.server.port: "3003"
         restart_policy: unless-stopped
         memory: "{{ immich_kirill_server_memory }}"
 

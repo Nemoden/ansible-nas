@@ -14,6 +14,12 @@ check:
 workhorse.check:
 	ansible-playbook --check --diff -i inventories/workhorse/inventory --tags "mysql,gitea,calibre,calibreweb,wireguard,jellyfin,jellyfinsys,samba,traefik,youtubedlmaterial,transmission,stats,portainer,miniflux,glances,dashy,homepage,paperless_ng,mealie,wallabag" -b -u root nas.yml
 
+paperless.check:
+	ansible-playbook --check --diff --tags "paperless_ng" nas.yml
+
+paperless:
+	ansible-playbook --tags "paperless_ng" nas.yml
+
 homepage.check:
 	ansible-playbook --check --diff --tags "homepage" nas.yml
 
@@ -25,6 +31,15 @@ samba.check:
 
 samba:
 	ansible-playbook --tags "samba" nas.yml
+
+transmission.check:
+	ansible-playbook --check --diff --tags "transmission" nas.yml
+
+transmission:
+	ansible-playbook --tags "transmission" nas.yml
+
+traefik:
+	ansible-playbook --tags "traefik" nas.yml
 
 immich-kirill.check:
 	ansible-playbook --check --diff --tags "immich-kirill" nas.yml
@@ -90,3 +105,15 @@ valkey.check:
 
 jellyfin:
 	ansible-playbook -i inventories/workhorse/inventory --tags "jellyfin" -b -u root nas.yml
+
+ci.check:
+	ansible-playbook --check --tags "woodpecker_ci" nas.yml
+
+ci:
+	ansible-playbook --tags "woodpecker_ci" nas.yml
+
+ssh-key.check:
+	ansible-playbook --check --tags "ssh-key" nas.yml
+
+ssh-key:
+	ansible-playbook --tags "ssh-key" nas.yml

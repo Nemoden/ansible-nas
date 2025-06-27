@@ -4,6 +4,8 @@ mysql_enabled: false
 # directories
 mysql_data_directory: "{{ db_root }}/mysql-shared/"
 
+mysql_config_directory: "{{ docker_root }}/mysql-shared/config/"
+
 mysql_port: "3306"
 
 # specs
